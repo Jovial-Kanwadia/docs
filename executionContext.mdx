@@ -1,0 +1,81 @@
+---
+title: Execution Context I
+description: 'This will get a little complicated but if you hold on till the end this will clear alot of your doubts about how hoisting, scope chain and closure works? Why is javascript so weird?'
+---
+
+Whenever a script or program loads a global execution context is created. And every execution context goes through two phases:
+
+1. Creation Phase: In this phase memory space is set up for variables, funcions declarations etc within that context.
+
+2. Execution Phase: Where execution context is on the call stack and is executed.
+
+<img
+  className="block dark:hidden"
+  src="/images/globalexecontext.png"
+  alt="Hero Light"
+/>
+<img
+  className="hidden dark:block"
+  src="/images/globalexecontext.png"
+  alt="Hero Dark"
+/>
+
+## Creation Phase
+
+Let's talk about all parts of Global Execution Context in detail.
+
+<img
+  className="block dark:hidden"
+  src="/images/CreationPhase.png"
+  alt="Hero Light"
+/>
+<img
+  className="hidden dark:block"
+  src="/images/CreationPhase.png"
+  alt="Hero Dark"
+/>
+
+### Realm
+
+The realm points to a realm record. Realm is an isolated environment is which our code runs. In browser a new realm is created whenever we open a new tab, refresh a page or use service works, web workers, iframes etc.
+
+<img
+  className="block dark:hidden"
+  src="/images/Realm.png"
+  alt="Hero Light"
+/>
+<img
+  className="hidden dark:block"
+  src="/images/Realm.png"
+  alt="Hero Dark"
+/>
+
+Realm consists of intrinsics, Global Object, and Global Environment Record.
+
+#### Intrinsics
+
+Intrinsics provide all the standard build-in objects and functions that are essentially required to execute javascript. Eg: Array, Strings, Numbers, Syntax Errors etc.
+
+#### Global Object
+
+These are properties of global objects that can be accessed from anywhere inside the script.
+1. Spec Properties: They are properties that exposes the intrinsics so that all the arrays, functions etc are present on the global object.
+2. Host Defined Properties: These are browser properties such as fetch, set timeout, document onject etc.
+3. User Defined Properties: As developers we can explicitly add properties to the global object or we can do it implicitly whenever we declare a function in the global scope or when we have a variable with var keyword in global scope.
+
+#### Global Environment Record
+
+Environment records manages the identifier bindings within that context. In case of global environment record these values are accessible throughout our entire script. It contains:
+1. Object Record: It is just a direct reference to global object. Holds identifier bindings of var variable, function declarations etc.
+2.Declarative Record: It contains all identifier bindings that aren't a variable with var keyword, function, object declarations etc.
+3. Global "this" value: It contains the global "this" value which in most cases points to the global object.
+4. Outer Env: In global environment record it contains null but it is an important property used in scope, scope chain, closure. When a new Function Execution Context is created this Outer Env points to its outer environment.
+
+### Lexical Environment
+Lexical Environment points to the Environment Record that contains the bindings for everything except for variable with var keyword which is Global Environment Record -> Declarative Record.
+
+### Variable Environment Record
+Points to the record which stores the bindings that contains the refrences to the variable with the var keyword usually Global Environment Record -> Object Record.
+<br/>
+In the next article we will try to understand this with an example.
+
